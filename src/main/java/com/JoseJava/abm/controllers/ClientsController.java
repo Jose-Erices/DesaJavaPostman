@@ -1,6 +1,7 @@
 package com.JoseJava.abm.controllers;
 
 import com.JoseJava.abm.entities.Client;
+import com.JoseJava.abm.entities.Producto;
 import com.JoseJava.abm.servicies.ClientServicie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +49,31 @@ public class ClientsController {
             throw new RuntimeException("READ ONE ERROR");
         }
     }
+
+    @PutMapping("/{id}")
+    public Client updateClient(@PathVariable("id") Long id, @RequestBody Client updatedClient) {
+        try {
+            // Verificar si el cliente con el id proporcionado existe
+            Optional<Client> existingClient = service.readOneClient(id);
+            if (existingClient.isPresent()) {
+                Client clientToUpdate = existingClient.get();
+                // Actualizar solo los campos necesarios del cliente
+                clientToUpdate.setName(updatedClient.getName());
+                clientToUpdate.setLastname(updatedClient.getLastname());
+                clientToUpdate.setEdad(updatedClient.getEdad());
+                clientToUpdate.setRUT(updatedClient.getRUT());
+                // Guardar el cliente actualizado
+                service.saveClient(clientToUpdate);
+                return clientToUpdate;
+            } else {
+                throw new RuntimeException("Client not found with id: " + id);
+            }
+        } catch (Exception exception) {
+            System.out.println(exception);
+            throw new RuntimeException("UPDATE ERROR");
+        }
+    }
+
 @DeleteMapping ("/{id}")
 
 public  void  destroyOneClient(@PathVariable("id")Long id) {

@@ -2,6 +2,7 @@ package com.JoseJava.abm.servicies;
 
 
 import com.JoseJava.abm.entities.Client;
+import com.JoseJava.abm.entities.Producto;
 import com.JoseJava.abm.repositoies.ClientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,11 @@ public class ClientServicie {
     }
 
 
+    public Optional<Producto> findProductoById(Long id) {
+        return Optional.empty();
+    }
 
-
+    public Producto saveProducto(Producto existingProducto) {
+        return existingProducto;
+    }
 }
